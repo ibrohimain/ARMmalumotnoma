@@ -98,7 +98,7 @@ export default function BookUploadForm() {
           <div className="bg-yellow-50 p-8 rounded-3xl border-4 border-yellow-400">
             <h2 className="text-2xl font-bold text-yellow-900 mb-6">Topshiruvchi ma'lumotlari</h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <input required placeholder="F.I.Sh (masalan: Eshonqulov Sherzod Eshnazarovich)" value={topshiruvchi.topshiruvchiFIO}
+              <input required placeholder="F.I.Sh (masalan: Abdullayev Umar)" value={topshiruvchi.topshiruvchiFIO}
                 onChange={e => setTopshiruvchi({ ...topshiruvchi, topshiruvchiFIO: e.target.value })}
                 className="px-6 py-4 border-2 border-yellow-600 rounded-xl text-lg" />
 
@@ -126,10 +126,16 @@ export default function BookUploadForm() {
                 <select required value={kitob.turi} onChange={e => updateKitob(i, "turi", e.target.value)}
                   className="px-6 py-4 border-2 rounded-xl text-lg">
                   <option value="">Kitob turini tanlang</option>
-                  <option>o‘quv qo‘llanma</option>
-                  <option>darslik</option>
-                  <option>monografiya</option>
-                  <option>uslubiy qo‘llanma</option>
+                  <option>Darslik</option>
+                  <option>Uslubiy ko'rsatma</option>
+                  <option>O'quv qo'llanma</option>
+                  <option>Badiy adabiyot</option>
+                  <option>Uslubiy qo'llanma</option>
+                  <option>Lug'atlar</option>
+                  <option>Ma'lumotnomalar</option>
+                  <option>Ma'ruza to'plami</option>
+                  <option>Boshqa adabiyotlar</option>
+                  <option>O'quv uslubiy majmua</option>
                 </select>
 
                 <input required placeholder="Fan nomi" value={kitob.fanNomi}

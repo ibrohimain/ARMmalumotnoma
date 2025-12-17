@@ -1,4 +1,4 @@
-// src/components/GeneratePDFs.jsx ← TO‘LIQ SHU BILAN ALMASHTIRING!!!
+// src/components/GeneratePDFs.jsx
 
 import { jsPDF } from "jspdf";
 import { format } from "date-fns";
@@ -16,8 +16,8 @@ export default function GeneratePDFs({ kitoblar, topshiruvchi, raqamlar }) {
     // Yuqori qism – kafedra va lavozim
     doc.setFontSize(11);
     doc.text(`«${topshiruvchi.kafedra}»`, w / 2, 20, { align: "center" });
-    doc.text(`kafedrasi ${topshiruvchi.lavozim}`, w / 2, 26, { align: "center" });
-    doc.text(`Eshonqulov Sherzod tomonidan`, w / 2, 32, { align: "center" });
+    doc.text(`kafedrasi ${topshiruvchi.lavozim}i`, w / 2, 26, { align: "center" });
+    doc.text(`${topshiruvchi.topshiruvchiFIO} tomonidan`, w / 2, 32, { align: "center" });
 
     // Sarlavha
     doc.setFontSize(24);
@@ -49,10 +49,16 @@ export default function GeneratePDFs({ kitoblar, topshiruvchi, raqamlar }) {
       y += 6;
     });
 
-    // Sana va imzo
+    // Sana va imzo – dinamik!
+    const qisqaImzo = topshiruvchi.topshiruvchiFIO
+      .trim()
+      .split(" ")
+      .map((word, idx) => idx === 0 ? word : word.charAt(0) + ".")
+      .join(" ");
+
     doc.setFontSize(12);
     doc.text(bugun + " yil", 20, y + 15);
-    doc.text("Eshonqulov Sh.", w - 40, y + 15, { align: "right" });
+    doc.text(qisqaImzo, w - 40, y + 15, { align: "right" });
 
     // ====================== 2-BET: MA’LUMOTNOMA ======================
     doc.addPage();
@@ -93,7 +99,7 @@ export default function GeneratePDFs({ kitoblar, topshiruvchi, raqamlar }) {
     kitoblar.forEach((kitob, i) => {
       const raqam = raqamlar[i].split("-")[1];
       const muallif = kitob.muallif.length > 25 ? kitob.muallif.substring(0, 25) + "..." : kitob.muallif;
-      const nomi = kitob.kitobNomi.length > 35 ? kitob.kitobNomi.substring(0, 35) + "..." : kitob.kitobNomi;
+      const nomi = kitob.kitobNomi.length > 35 ? kitob.kitobNomi.substring(0, 45) + "..." : kitob.kitobNomi;
 
       doc.text(raqam, 22, yPos);
       doc.text(muallif, 35, yPos);
@@ -131,11 +137,15 @@ export default function GeneratePDFs({ kitoblar, topshiruvchi, raqamlar }) {
     } catch (e) {}
 
     // 100% YUKLANADI
+    const ilkRaqam = raqamlar[0].split("-")[1];
+    const oxirgiRaqam = kitoblar.length > 1 ? raqamlar[raqamlar.length - 1].split("-")[1] : "";
+    const faylNomi = `Malumotnoma_${ilkRaqam}${oxirgiRaqam ? "-" + oxirgiRaqam : ""}.pdf`;
+
     const blob = doc.output("blob");
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `Malumotnoma_${raqamlar[0].replace("-", "_")}_${kitoblar.length > 1 ? raqamlar[raqamlar.length-1].split("-")[1] : ""}.pdf`;
+    a.download = faylNomi;
     a.click();
 
     setTimeout(() => {

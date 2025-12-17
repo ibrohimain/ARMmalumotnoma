@@ -44,7 +44,7 @@ function App() {
     if (window.location.pathname === "/add-book") {
       return <BookUploadForm />;
     }
-    return <BookUploadForm />;
+    return <AdminPanel/>;
   }
 
   // Agar kirgan bo‘lsa, lekin admin emas – oddiy forma
