@@ -136,6 +136,7 @@ export default function BookUploadForm() {
                   <option>Ma'ruza to'plami</option>
                   <option>Boshqa adabiyotlar</option>
                   <option>O'quv uslubiy majmua</option>
+                  {/* l */}
                 </select>
 
                 <input required placeholder="Fan nomi" value={kitob.fanNomi}
