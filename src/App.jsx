@@ -5,7 +5,6 @@ import { auth } from "./firebase/config";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import BookUploadForm from "./components/BookUploadForm";
 import AdminPanel from "./components/AdminPanel";
-import { Book } from "lucide-react";
 
 function App() {
   const [user, setUser] = useState(null);
